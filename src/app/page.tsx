@@ -1751,7 +1751,7 @@ export default function EnhancedTrainOfThought(): React.ReactElement {
                   LinkedIn
                 </Link>
                 <Link
-                  href="https://3-drpg-portfolio-65aw.vercel.app/"
+                  href="https://3-drpg-portfolio.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-white transition-colors duration-300 flex items-center"
