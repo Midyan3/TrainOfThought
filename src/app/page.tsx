@@ -162,9 +162,7 @@ export default function EnhancedTrainOfThought(): React.ReactElement {
   const typingAudioRef = useRef<HTMLAudioElement | null>(null);
   const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
 
-  useEffect(() => {
-    console.log("Current stage:", stage);
-  }, [stage]);
+  useEffect(() => {}, [stage]);
 
   const fetchMessages = async () => {
     try {
@@ -304,7 +302,6 @@ export default function EnhancedTrainOfThought(): React.ReactElement {
   };
 
   const startExperience = (enableAudio = false): void => {
-    console.log("Starting experience, audio:", enableAudio);
     setAudioEnabled(enableAudio);
     if (enableAudio) {
       trainAudioRef.current?.play().catch(console.error);
@@ -337,7 +334,6 @@ export default function EnhancedTrainOfThought(): React.ReactElement {
   };
 
   const startEyesOpeningSequence = (): void => {
-    console.log("Starting eyes opening sequence");
     setStage("eyesOpening");
     setEyesOpenProgress(0);
     setLightLevel(0.01);
@@ -404,12 +400,9 @@ export default function EnhancedTrainOfThought(): React.ReactElement {
   };
 
   const beginStory = (): void => {
-    console.log("Beginning story");
-
     setStage("wakeUp");
 
     setTimeout(() => {
-      console.log("Now starting animation with explicit stage");
       setTextIndex(0);
       setTextPosition({ x: 30, y: 30 });
       setTextStyle({
@@ -442,8 +435,6 @@ export default function EnhancedTrainOfThought(): React.ReactElement {
     }
 
     const text = stageTexts[index];
-    console.log("Text to animate:", text);
-
     setCurrentText("");
     setTextComplete(false);
 
@@ -474,13 +465,10 @@ export default function EnhancedTrainOfThought(): React.ReactElement {
   };
 
   const advanceText = (): void => {
-    console.log("Advancing text in stage:", stage, "at index:", textIndex);
     const currentStageContent = stageContent[stage];
     if (!currentStageContent) return;
 
     if (stage === "turning") {
-      console.log("In turning stage, special handling");
-
       if (textIndex + 1 < currentStageContent.length) {
         const newIndex = textIndex + 1;
         setTextIndex(newIndex);
@@ -521,7 +509,6 @@ export default function EnhancedTrainOfThought(): React.ReactElement {
   };
 
   const moveToNextStage = (): void => {
-    console.log("Moving to next stage from", stage);
     const stageOrder: Stage[] = [
       "wakeUp",
       "anxiety",
@@ -541,7 +528,6 @@ export default function EnhancedTrainOfThought(): React.ReactElement {
       updateStageEffects(nextStage);
 
       setTimeout(() => {
-        console.log(`Starting text animation for ${nextStage} at index 0`);
         startTextAnimation(nextStage, 0);
       }, 100);
     }
@@ -705,9 +691,6 @@ export default function EnhancedTrainOfThought(): React.ReactElement {
       }
 
       if (breathingActive) return;
-
-      console.log("Click event - textComplete:", textComplete, "stage:", stage);
-
       if (stage === "turning") {
         console.log(
           "In turning stage handler, textIndex:",
@@ -864,9 +847,6 @@ export default function EnhancedTrainOfThought(): React.ReactElement {
 
   useEffect(() => {
     if (!breathingActive) return;
-
-    console.log("*** BREATHING ACTIVATION EFFECT TRIGGERED ***");
-
     setBreathingPhase("inhale");
     setBreathProgress(0);
     setBreathingSuccess(false);
@@ -879,7 +859,6 @@ export default function EnhancedTrainOfThought(): React.ReactElement {
     }
 
     setTimeout(() => {
-      console.log("Setting initial breathing phase to inhale");
       setBreathingPhase("inhale");
     }, 1500);
 
@@ -966,9 +945,7 @@ export default function EnhancedTrainOfThought(): React.ReactElement {
 
   useEffect(() => {
     if (breathingActive && !userInteracted) {
-      console.log("Setting up auto-advance timer for breathing");
       const autoAdvanceTimer = setTimeout(() => {
-        console.log("Auto-advancing breathing due to no user interaction");
         setBreathCycles(4);
         setBreathingActive(false);
         moveToNextStage();
