@@ -1,14 +1,14 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function GET(request: NextRequest) {
+export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-    const sortBy = searchParams.get("sortBy") || "newest";
+    const url = new URL(request.url);
+    const sortBy = url.searchParams.get("sortBy") || "newest";
 
-    let orderBy: any = {};
+    let orderBy = {};
 
     switch (sortBy) {
       case "mostLiked":
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { text } = body;
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function PATCH(request: NextRequest) {
+export async function PATCH(request: Request) {
   try {
     const body = await request.json();
     const { id, action } = body;
